@@ -21,7 +21,7 @@ def is_safe(data) -> bool:
     for index in range(report_size):
         numb_1, numb_2 = data[index], data[index + NEXT_ITEM]
 
-        if _delta_too_much(numb_1, numb_2):
+        if _calculate_delta(numb_1, numb_2) not in TOLERANCE:
             return False
 
         if _changed_direction(last_direction, numb_1, numb_2):
@@ -38,10 +38,6 @@ def _get_direction(numb_1, numb_2):
     if (numb_2 - numb_1) > 0:
         return INCREASING
     return DECREASING
-
-def _delta_too_much(numb_1, numb_2) -> bool:
-    delta = _calculate_delta(numb_1, numb_2)
-    return delta not in TOLERANCE
 
 def _calculate_delta(numb_1, numb_2):
     return abs(numb_2 - numb_1)
