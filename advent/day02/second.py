@@ -1,11 +1,8 @@
 
 INCREASING = 1
 DECREASING = -1
-
 ZERO_INDEX_ADJUSTMENT = 1
-
 TOLERANCE = [1, 2, 3]
-
 NEXT_ITEM = 1
 
 # import pdb; pdb.set_trace()
@@ -46,7 +43,9 @@ def is_safe_pt2(data) -> bool:
     if is_safe(data):
         return True
 
-    result = False
+    return _safe_if_any_items_removed(data)
+
+def _safe_if_any_items_removed(data) -> bool:
     for index in range(len(data)):
         copy = data.copy()
         copy.pop(index)
@@ -54,4 +53,4 @@ def is_safe_pt2(data) -> bool:
         if is_safe(copy):
             return True
 
-    return result
+    return False

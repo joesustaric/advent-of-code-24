@@ -98,4 +98,4 @@ def test_part_2_answer():
             if advent.day02.second.is_safe_pt2(split_line_int):
                 result += 1
 
-    assert  503 == result
+    assert  514 == result
