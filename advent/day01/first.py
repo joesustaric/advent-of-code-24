@@ -13,8 +13,8 @@ def day_one(list_one, list_two):
     return sum(result)
 
 def day_one_part_two(list_one, list_two):
-
     result = []
+    
     for item in list_one:
         if  list_two.count(item) > 0:
             result.append(item * list_two.count(item))

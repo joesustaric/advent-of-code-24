@@ -16,6 +16,7 @@ def test_first_answer():
             split_line = line.split()
             list_one.append(int(split_line[0]))
             list_two.append(int(split_line[1]))
+
     expected = 1580061
     result = advent.day01.first.day_one(list_one, list_two)
     assert  expected == result
@@ -37,6 +38,7 @@ def test_first_answer_part_two():
             split_line = line.split()
             list_one.append(int(split_line[0]))
             list_two.append(int(split_line[1]))
+
     expected = 23046913
     result = advent.day01.first.day_one_part_two(list_one, list_two)
     assert  expected == result

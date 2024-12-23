@@ -1,26 +1,40 @@
 import advent.day02.second
+import pytest
 
-def test_how_many_are_safe():
-    safe_1  = [7, 6, 4, 2, 1]
-    unsafe_1 = [1, 2, 7, 8, 9]
-    unsafe_2 = [9, 7, 6, 2, 1]
-    safe_2 = [1, 3, 2, 4, 5]
-    safe_3 = [8, 6, 4, 4, 1]
-    safe_4 = [1, 3, 6, 7, 9]
+# A single element report is safe
+def test_detect_safe_due_to_one_reading():
+    data = [234234]
+    assert True == advent.day02.second.is_safe(data)
 
-    safe_1 = advent.day02.second.remove_first_error_from_data(safe_1)
-    safe_2 = advent.day02.second.remove_first_error_from_data(safe_2)
-    safe_3 = advent.day02.second.remove_first_error_from_data(safe_3)
-    safe_4 = advent.day02.second.remove_first_error_from_data(safe_4)
-    unsafe_1 = advent.day02.second.remove_first_error_from_data(unsafe_1)
-    unsafe_2 = advent.day02.second.remove_first_error_from_data(unsafe_2)
-    assert advent.day02.second.is_safe(safe_1) == True
-    assert advent.day02.second.is_safe(safe_2) == True
-    assert advent.day02.second.is_safe(safe_3) == True
-    assert advent.day02.second.is_safe(safe_4) == True
-    assert advent.day02.second.is_safe(unsafe_1) == False
-    assert advent.day02.second.is_safe(unsafe_2) == False
+# 1 3 2 4 5: Unsafe because 1 3 is increasing but 3 2 is decreasing.
+def test_detect_unsafe_due_to_change_in_direction():
+    data = [1, 3, 2, 4, 5]
+    assert False == advent.day02.second.is_safe(data)
 
+# 8 6 4 4 1: Unsafe because 4 4 is neither an increase or a decrease.
+def test_detect_unsafe_due_to_no_in_direction():
+    data = [8, 6, 4, 4, 1]
+    assert False == advent.day02.second.is_safe(data)
+
+# 9 7 6 2 1: Unsafe because 6 2 is a decrease of 4.
+def test_detect_unsafe_due_to_decrease_too_many():
+    data = [9, 7, 6, 2, 1]
+    assert False == advent.day02.second.is_safe(data)
+
+# 1 2 7 8 9: Unsafe because 2 7 is an increase of 5.
+def test_detect_unsafe_due_to_increase_too_many():
+    data = [1, 2, 7, 8, 9]
+    assert False == advent.day02.second.is_safe(data)
+
+# 7 6 4 2 1: Safe because the levels are all decreasing by 1 or 2.
+def test_detect_safe_due_to_all_decrease_in_range():
+    data = [7, 6, 4, 2, 1]
+    assert True == advent.day02.second.is_safe(data)
+
+# 1 3 6 7 9: Safe because the levels are all increasing by 1, 2, or 3.
+def test_detect_safe_due_to_all_increasing_in_range():
+    data = [1, 3, 6, 7, 9]
+    assert True == advent.day02.second.is_safe(data)
 
 def test_second_answer():
     result = 0
@@ -30,9 +44,7 @@ def test_second_answer():
             split_line_string = line.split()
             split_line_int = [int(i) for i in split_line_string]
 
-            split_line_string = advent.day02.second.remove_first_error_from_data(split_line_int)
-            if advent.day02.second.is_safe(split_line_string):
+            if advent.day02.second.is_safe(split_line_int):
                 result += 1
 
-    expected = 234
-    assert  expected == result
+    assert  463 == result
